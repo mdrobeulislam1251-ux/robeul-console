@@ -14,3 +14,11 @@ npm run dev
 ```
 
 Pushing to `main` deploys to GitHub Pages via `.github/workflows/deploy.yml`.
+
+## Profile READMEs
+
+`readme/build.ts` generates both GitHub profile READMEs (and their SVG cards) from the same `src/data.ts`, using the console's design tokens, so the app and the profiles stay one system.
+
+```bash
+node readme/build.ts   # writes readme/out/<account>/README.md + assets/system/*.svg
+```
