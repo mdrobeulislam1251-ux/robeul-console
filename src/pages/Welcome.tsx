@@ -51,7 +51,7 @@ export const Welcome = () => {
     <div className="page welcome">
       <section className="hero">
         <div className="hero-copy">
-          <span className="eyebrow">
+          <span className="pill">
             <span className="pulse" /> Welcome, thanks for stopping by
           </span>
           <h1>
@@ -72,9 +72,16 @@ export const Welcome = () => {
             <Link to="/projects" className="btn primary">
               Watch the case files <Icon name="arrow" size={16} />
             </Link>
-            <Link to="/contact" className="btn ghost">
+            <Link to="/contact" className="btn link">
               Work with me
             </Link>
+          </div>
+          <div className="trust-row">
+            {["Verified before it ships", "Gated AI agents", "Self-hosted"].map((t) => (
+              <span key={t}>
+                <Icon name="check" size={15} /> {t}
+              </span>
+            ))}
           </div>
         </div>
 
@@ -83,7 +90,7 @@ export const Welcome = () => {
             <i />
             <i />
             <i />
-            <span>verify.log</span>
+            <span>robeul.console / verify.log</span>
           </div>
           <ul className="log">
             {log.slice(0, lines).map(([mark, step, outcome]) => (

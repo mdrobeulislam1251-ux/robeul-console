@@ -303,12 +303,25 @@ export const pipeline = [
 ];
 
 export const stack: Record<string, string[]> = {
-  "AI & Agents": ["Claude Agent SDK", "Claude Code", "Multi-agent orchestration", "MCP", "Enforcement hooks", "Context engineering", "vLLM / Qwen"],
-  Data: ["Python", "PostgreSQL", "Supabase", "ETL / ELT", "Scraping at scale", "Waterfall verification", "Identity resolution"],
-  "Automation & APIs": ["n8n", "REST / RPC", "Webhooks", "FastAPI", "Express", "KrakenD", "Authgear"],
-  "GTM Systems": ["Apollo.io", "ICP design", "MillionVerifier", "Reacher", "Smartlead", "Instantly", "CRM integration"],
-  Infrastructure: ["Docker", "Linux", "Coolify", "Tailscale", "Cloudflare Tunnels", "Caddy", "AWS SES", "Vercel"],
-  Languages: ["Python", "TypeScript", "JavaScript", "SQL", "Bash", "Next.js", "React"],
+  "AI & Agents": ["Claude Agent SDK", "Claude Code", "Multi-agent orchestration", "MCP", "Enforcement hooks", "Prompt & context engineering", "vLLM", "Qwen", "Retrieval & personalisation", "AI-assisted prototyping"],
+  Data: ["Python", "PostgreSQL", "Supabase", "Elasticsearch", "OpenSearch", "ETL / ELT", "Scraping at scale", "Waterfall verification", "Dedup & identity resolution", "Schema design", "Data-quality auditing"],
+  "Automation & APIs": ["n8n", "REST / RPC API design", "Webhooks", "Next.js API routes", "FastAPI", "Express", "KrakenD", "Authgear", "Rate limiting & retries"],
+  "GTM Systems": ["Apollo.io", "ICP design & segmentation", "B2B list building", "Enrichment", "MillionVerifier", "Reacher", "Deliverability", "Smartlead", "Instantly", "CRM integration", "RevOps data modelling"],
+  Infrastructure: ["Docker", "Docker Compose", "Ubuntu", "Linux", "Coolify", "Tailscale", "Cloudflare Tunnels", "Caddy", "Nginx", "AWS SES", "DNS", "UFW", "systemd", "KVM", "Vercel", "Server migration"],
+  Languages: ["Python", "TypeScript", "JavaScript", "SQL", "Bash", "Next.js", "React", "Node.js", "Kotlin"],
+  Professional: ["Team leadership", "Root-cause diagnosis", "Client-facing problem solving", "Technical documentation & standards", "Founding a business", "Async remote work with US teams"],
+};
+
+/** Brand icon for a skill: a simple-icons slug, or a local logo under public/. */
+export const brandIcons: Record<string, string> = {
+  "Claude Agent SDK": "claude", "Claude Code": "claude", MCP: "modelcontextprotocol", vLLM: "vllm", Qwen: "qwen",
+  Python: "python", PostgreSQL: "postgresql", Supabase: "supabase", Elasticsearch: "elasticsearch", OpenSearch: "opensearch",
+  n8n: "n8n", "Next.js API routes": "nextdotjs", FastAPI: "fastapi", Express: "express",
+  "Apollo.io": "./logos/apollo.png", Smartlead: "./logos/smartlead.png", Instantly: "./logos/instantly.png",
+  Docker: "docker", "Docker Compose": "docker", Ubuntu: "ubuntu", Linux: "linux", Coolify: "coolify", Tailscale: "tailscale",
+  "Cloudflare Tunnels": "cloudflare", Caddy: "caddy", Nginx: "nginx", Vercel: "vercel",
+  TypeScript: "typescript", JavaScript: "javascript", Bash: "gnubash", "Next.js": "nextdotjs", React: "react", "Node.js": "nodedotjs", Kotlin: "kotlin",
+  Git: "git", GitHub: "github", "GitHub Actions": "githubactions",
 };
 
 export const datasets = {

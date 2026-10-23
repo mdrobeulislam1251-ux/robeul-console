@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router";
 import { useList, useOne } from "@refinedev/core";
 import type { Experience } from "../data";
 import { Icon } from "../components/Icon";
+import { Brand } from "../components/Brand";
 
 export const ExperienceList = () => {
   const { result } = useList<Experience>({ resource: "experiences" });
@@ -25,7 +26,7 @@ export const ExperienceList = () => {
               <div className="chips">
                 {x.stack.slice(0, 5).map((s) => (
                   <span key={s} className="chip">
-                    {s}
+                    <Brand name={s} /> {s}
                   </span>
                 ))}
                 {x.stack.length > 5 && <span className="chip muted">+{x.stack.length - 5}</span>}
@@ -78,7 +79,7 @@ export const ExperienceShow = () => {
       <div className="chips">
         {x.stack.map((s) => (
           <span key={s} className="chip">
-            {s}
+            <Brand name={s} /> {s}
           </span>
         ))}
       </div>

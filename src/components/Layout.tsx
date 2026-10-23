@@ -12,7 +12,7 @@ const readTheme = (): "dark" | "light" => {
   } catch {
     /* storage blocked */
   }
-  return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+  return "light";
 };
 
 export const Layout = ({ children }: { children: ReactNode }) => {

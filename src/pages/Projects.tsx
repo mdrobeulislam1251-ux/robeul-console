@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router";
 import { useList, useOne } from "@refinedev/core";
 import type { Project } from "../data";
 import { Icon } from "../components/Icon";
+import { Brand } from "../components/Brand";
 
 const categories = ["All", "Data", "Infrastructure", "AI Agents"] as const;
 
@@ -132,7 +133,7 @@ export const ProjectShow = () => {
       <div className="chips">
         {p.stack.map((s) => (
           <span key={s} className="chip">
-            {s}
+            <Brand name={s} /> {s}
           </span>
         ))}
       </div>
