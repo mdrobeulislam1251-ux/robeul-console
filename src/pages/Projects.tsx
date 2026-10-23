@@ -5,7 +5,7 @@ import type { Project } from "../data";
 import { Icon } from "../components/Icon";
 import { Brand } from "../components/Brand";
 
-const categories = ["All", "Data", "Infrastructure", "AI Agents"] as const;
+const categories = ["All", "Data", "Infrastructure", "Automation", "AI Agents", "Product"] as const;
 
 export const ProjectList = () => {
   const [category, setCategory] = useState<(typeof categories)[number]>("All");

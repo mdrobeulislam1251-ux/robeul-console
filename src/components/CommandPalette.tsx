@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useList, useMenu, useGo } from "@refinedev/core";
-import type { Project, Rule, Experience } from "../data";
+import type { Project, Standard, Experience } from "../data";
 import { Icon } from "./Icon";
 
 type Hit = { key: string; label: string; hint: string; to: string };
@@ -14,7 +14,7 @@ export const CommandPalette = ({ onClose }: { onClose: () => void }) => {
 
   const projects = useList<Project>({ resource: "projects", filters, pagination: { mode: "off" } });
   const roles = useList<Experience>({ resource: "experiences", filters, pagination: { mode: "off" } });
-  const rules = useList<Rule>({ resource: "rules", filters, pagination: { mode: "off" } });
+  const standards = useList<Standard>({ resource: "standards", filters, pagination: { mode: "off" } });
 
   const hits = useMemo<Hit[]>(() => {
     const needle = q.toLowerCase();
@@ -26,9 +26,9 @@ export const CommandPalette = ({ onClose }: { onClose: () => void }) => {
       ...pages,
       ...(projects.result.data ?? []).map((p) => ({ key: p.id, label: p.title, hint: `Case file ${p.chapter}`, to: `/projects/${p.id}` })),
       ...(roles.result.data ?? []).map((r) => ({ key: r.id, label: `${r.role} · ${r.company}`, hint: "Experience", to: `/experience/${r.id}` })),
-      ...(rules.result.data ?? []).map((r) => ({ key: r.id, label: r.title, hint: `Rule ${r.n}`, to: "/doctrine" })),
+      ...(standards.result.data ?? []).map((r) => ({ key: r.id, label: r.title, hint: "Standard", to: "/standards" })),
     ];
-  }, [q, menuItems, projects.result.data, roles.result.data, rules.result.data]);
+  }, [q, menuItems, projects.result.data, roles.result.data, standards.result.data]);
 
   useEffect(() => setActive(0), [q]);
 

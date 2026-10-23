@@ -174,6 +174,8 @@ kbd { font-size: 11px; padding: 1px 6px; border: 1px solid var(--line); border-r
 .tag { font-size: 12px; padding: 2px 9px; border-radius: 999px; font-weight: 600; }
 .tag-data { background: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent); }
 .tag-infrastructure { background: var(--ok-bg); color: var(--ok); }
+.tag-automation { background: color-mix(in srgb, #ea4b71 10%, transparent); color: #c23a5c; }
+.tag-product { background: color-mix(in srgb, var(--accent-2) 12%, transparent); color: #0a7ea4; }
 .tag-aiagents { background: color-mix(in srgb, var(--violet) 12%, transparent); color: var(--violet); }
 .ext { display: inline-flex; gap: 6px; align-items: center; color: var(--accent); font-weight: 500; text-decoration: underline; text-underline-offset: 4px; }
 .empty { padding: 40px; text-align: center; color: var(--muted); }
@@ -186,14 +188,17 @@ kbd { font-size: 11px; padding: 1px 6px; border: 1px solid var(--line); border-r
 
 /* ---------- welcome ---------- */
 .hero {
-  display: grid; grid-template-columns: 1.05fr 1fr; gap: 48px; align-items: center;
-  min-height: calc(100vh - 190px); position: relative; padding: 24px 0;
+  display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; align-items: end;
+  position: relative; padding: 40px 0 44px;
 }
 .hero::before {
   content: ""; position: absolute; inset: -40px -40px 0 -40px; z-index: -1; border-radius: 0 0 24px 24px;
   background: var(--wash);
 }
-.hero h1 { font-size: clamp(36px, 5vw, 58px); margin: 20px 0 20px; letter-spacing: -0.035em; }
+.hero h1 { font-size: clamp(36px, 4.6vw, 58px); margin: 20px 0 20px; letter-spacing: -0.035em; }
+.hero h1 .grad { display: block; }
+.hero .note { margin: 0; }
+.nowrap { white-space: nowrap; }
 .note {
   margin: 26px 0; padding: 16px 18px; border-radius: 12px;
   border: 1px solid var(--line); background: var(--panel); color: var(--body); box-shadow: var(--shadow-sm); font-size: 14.5px;
@@ -221,7 +226,7 @@ kbd { font-size: 11px; padding: 1px 6px; border: 1px solid var(--line); border-r
 .metric { padding: 18px 20px; border-left: 1px solid var(--line); }
 .metric:first-child { border-left: 0; }
 .metric strong { display: block; font-size: 26px; font-weight: 600; letter-spacing: -0.03em; }
-.metric span { display: block; font-weight: 500; font-size: 13.5px; color: var(--text); }
+.metric > span { display: block; font-weight: 500; font-size: 13.5px; color: var(--text); }
 .metric small { color: var(--muted); font-size: 12px; }
 
 .now {
@@ -244,6 +249,28 @@ kbd { font-size: 11px; padding: 1px 6px; border: 1px solid var(--line); border-r
 .chapter-card p { color: var(--body); font-size: 13.5px; margin: 0; flex: 1; }
 .chapter-card small { color: var(--muted); font-size: 12px; }
 .chapter-no { font: 500 12px "Geist Mono", monospace; color: var(--muted); }
+
+/* ---------- pipeline motion ---------- */
+.motion { margin: 0; }
+.motion-frame { border-radius: 14px; border: 1px solid var(--line); background: var(--panel); box-shadow: var(--shadow-lg); overflow: hidden; }
+.motion-scroll { overflow-x: auto; }
+.motion-svg { min-width: 860px; padding: 8px 6px 2px; }
+.motion-svg svg { display: block; width: 100%; height: auto; }
+.motion figcaption { margin-top: 10px; color: var(--muted); font-size: 12.5px; text-align: center; }
+.welcome .motion { margin-bottom: 28px; }
+.stage-grid { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.stage-grid li { padding: 18px; border-radius: 14px; border: 1px solid var(--line); background: var(--panel); box-shadow: var(--shadow-sm); }
+.stage-grid h3 { font-size: 16px; margin: 10px 0 6px; }
+.stage-grid p { margin: 0; color: var(--body); font-size: 14px; }
+.stage-n { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font: 600 12px "Geist Mono", monospace; color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.building { list-style: none; margin: 0; padding: 8px; display: grid; gap: 4px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); box-shadow: var(--shadow); }
+.building li { display: flex; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 10px; }
+.building li:hover { background: var(--bg-2); }
+.building img { width: 34px; height: 34px; border-radius: 8px; object-fit: contain; border: 1px solid var(--line); padding: 3px; background: var(--panel); }
+.building div { flex: 1; min-width: 0; }
+.building strong { display: block; font-size: 14.5px; font-weight: 600; }
+.building small { color: var(--muted); font-size: 12.5px; }
+.live { display: inline-flex; gap: 6px; align-items: center; font-size: 12px; font-weight: 500; color: var(--ok); background: var(--ok-bg); padding: 2px 9px; border-radius: 999px; }
 
 /* ---------- list / table ---------- */
 .toolbar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; }
@@ -310,7 +337,7 @@ blockquote { margin: 0; padding: 16px 20px; border-radius: 12px; font-size: 17px
 .pipe-detail h2 { font-size: 30px; margin: 8px 0 12px; }
 .pipe-detail .btn { margin-top: 20px; }
 
-/* ---------- doctrine ---------- */
+/* ---------- standards ---------- */
 .words { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
 .words code { padding: 5px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--panel); color: var(--text); font-weight: 500; font-size: 12.5px; }
 .rule-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
@@ -327,6 +354,7 @@ blockquote { margin: 0; padding: 16px 20px; border-radius: 12px; font-size: 17px
 .company small { color: var(--muted); font-weight: 500; }
 .company p { color: var(--body); margin: 4px 0 10px; flex: 1; }
 .stack-card h3 { font-size: 15.5px; }
+.stack-card > p { margin: 0 0 4px; color: var(--muted); font-size: 13px; }
 
 /* ---------- contact ---------- */
 .contact { display: grid; place-items: center; min-height: calc(100vh - 220px); }

@@ -8,7 +8,7 @@ import { Welcome } from "./pages/Welcome";
 import { ExperienceList, ExperienceShow } from "./pages/Experience";
 import { ProjectList, ProjectShow } from "./pages/Projects";
 import { Pipeline } from "./pages/Pipeline";
-import { Doctrine } from "./pages/Doctrine";
+import { Standards } from "./pages/Standards";
 import { Companies } from "./pages/Companies";
 import { Stack } from "./pages/Stack";
 import { Contact } from "./pages/Contact";
@@ -18,11 +18,10 @@ const resources = [
   { name: "experiences", list: "/experience", show: "/experience/:id", meta: { label: "Experience", icon: <Icon name="briefcase" /> } },
   { name: "projects", list: "/projects", show: "/projects/:id", meta: { label: "Case files", icon: <Icon name="film" /> } },
   { name: "pipeline", list: "/pipeline", meta: { label: "The pipeline", icon: <Icon name="flow" /> } },
-  { name: "rules", list: "/doctrine", meta: { label: "Doctrine", icon: <Icon name="shield" /> } },
+  { name: "standards", list: "/standards", meta: { label: "Standards", icon: <Icon name="shield" /> } },
   { name: "companies", list: "/companies", meta: { label: "Companies", icon: <Icon name="building" /> } },
   { name: "stack", list: "/stack", meta: { label: "Stack", icon: <Icon name="layers" /> } },
   { name: "contact", list: "/contact", meta: { label: "Contact", icon: <Icon name="mail" /> } },
-  { name: "lessons", meta: { hide: true } },
 ];
 
 const title = ({ resource, action }: { resource?: { meta?: { label?: string } }; action?: string }) => {
@@ -54,7 +53,8 @@ export default function App() {
             <Route path="/projects" element={<ProjectList />} />
             <Route path="/projects/:id" element={<ProjectShow />} />
             <Route path="/pipeline" element={<Pipeline />} />
-            <Route path="/doctrine" element={<Doctrine />} />
+            <Route path="/standards" element={<Standards />} />
+            <Route path="/doctrine" element={<Standards />} />
             <Route path="/companies" element={<Companies />} />
             <Route path="/stack" element={<Stack />} />
             <Route path="/contact" element={<Contact />} />

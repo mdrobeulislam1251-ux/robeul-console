@@ -91,7 +91,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
           </button>
           <button className="search" onClick={() => setPaletteOpen(true)}>
             <Icon name="search" size={16} />
-            <span>Search projects, rules, stack…</span>
+            <span>Search projects, skills, stack…</span>
             <kbd>Ctrl K</kbd>
           </button>
           <div className="topbar-right">
@@ -109,7 +109,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
         </header>
         <main className="content">{children}</main>
         <footer className="footer">
-          Built with Refine + React · content is read through a Refine data provider · © {new Date().getFullYear()}{" "}
+          Built with Refine + React · © {new Date().getFullYear()}{" "}
           {profile.name}
         </footer>
       </div>

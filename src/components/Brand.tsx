@@ -1,17 +1,11 @@
 import {
-  siCaddy, siClaude, siCloudflare, siCoolify, siDocker, siElasticsearch, siExpress, siFastapi, siGit, siGithub,
-  siGithubactions, siGnubash, siJavascript, siKotlin, siLinux, siModelcontextprotocol, siN8n, siNextdotjs, siNginx,
-  siNodedotjs, siOpensearch, siPostgresql, siPython, siQwen, siReact, siSupabase, siTailscale, siTypescript, siUbuntu,
-  siVercel, siVllm,
+  siAndroid, siAsana, siCaddy, siClaude, siClickhouse, siCloudflare, siCoolify, siDocker, siElasticsearch, siExpress, siFastapi, siGit, siGithub, siGithubactions, siGnubash, siGooglesheets, siGraphql, siHubspot, siJavascript, siKotlin, siLetsencrypt, siLinear, siLinux, siMikrotik, siModelcontextprotocol, siN8n, siNextdotjs, siNginx, siNodedotjs, siOpenapiinitiative, siOpensearch, siPostgresql, siPython, siQwen, siReact, siStripe, siSupabase, siSwift, siTailscale, siTypescript, siUbuntu, siVercel, siVllm, siWireguard,
 } from "simple-icons";
 import { brandIcons } from "../data";
 
 const icons: Record<string, { path: string; hex: string }> = Object.fromEntries(
   [
-    siCaddy, siClaude, siCloudflare, siCoolify, siDocker, siElasticsearch, siExpress, siFastapi, siGit, siGithub,
-    siGithubactions, siGnubash, siJavascript, siKotlin, siLinux, siModelcontextprotocol, siN8n, siNextdotjs, siNginx,
-    siNodedotjs, siOpensearch, siPostgresql, siPython, siQwen, siReact, siSupabase, siTailscale, siTypescript, siUbuntu,
-    siVercel, siVllm,
+    siAndroid, siAsana, siCaddy, siClaude, siClickhouse, siCloudflare, siCoolify, siDocker, siElasticsearch, siExpress, siFastapi, siGit, siGithub, siGithubactions, siGnubash, siGooglesheets, siGraphql, siHubspot, siJavascript, siKotlin, siLetsencrypt, siLinear, siLinux, siMikrotik, siModelcontextprotocol, siN8n, siNextdotjs, siNginx, siNodedotjs, siOpenapiinitiative, siOpensearch, siPostgresql, siPython, siQwen, siReact, siStripe, siSupabase, siSwift, siTailscale, siTypescript, siUbuntu, siVercel, siVllm, siWireguard,
   ].map((i) => [i.slug, i]),
 );
 

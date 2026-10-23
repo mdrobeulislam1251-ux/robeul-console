@@ -1,62 +1,34 @@
-import { useEffect, useState } from "react";
+import { Link } from "react-router";
 import { pipeline } from "../data";
+import { PipelineMotion } from "../components/PipelineMotion";
+import { Icon } from "../components/Icon";
 
-export const Pipeline = () => {
-  const [step, setStep] = useState(0);
-  const [auto, setAuto] = useState(true);
+export const Pipeline = () => (
+  <div className="page">
+    <header className="page-head">
+      <span className="eyebrow">The pipeline</span>
+      <h1>From an ICP to a booked meeting, in one motion.</h1>
+      <p>Every list I deliver goes through the same seven stages, so what reaches your inbox is accurate before anyone sends to it.</p>
+    </header>
 
-  useEffect(() => {
-    if (!auto) return;
-    const t = setInterval(() => setStep((s) => (s + 1) % pipeline.length), 2200);
-    return () => clearInterval(t);
-  }, [auto]);
+    <PipelineMotion id="pm-page" />
 
-  const current = pipeline[step];
+    <ol className="stage-grid">
+      {pipeline.map((p, i) => (
+        <li key={p.id}>
+          <span className="stage-n">{i + 1}</span>
+          <h3>{p.label}</h3>
+          <p>{p.detail}</p>
+        </li>
+      ))}
+    </ol>
 
-  return (
-    <div className="page">
-      <header className="page-head">
-        <span className="eyebrow">The pipeline</span>
-        <h1>ICP in, verified leads out.</h1>
-        <p>Every list I deliver goes through the same six stages. Click a stage to stop the tour and read it.</p>
-      </header>
-
-      <div className="pipe">
-        {pipeline.map((p, i) => (
-          <button
-            key={p.id}
-            className={`pipe-node ${i === step ? "on" : ""} ${i < step ? "done" : ""}`}
-            onClick={() => {
-              setAuto(false);
-              setStep(i);
-            }}
-          >
-            <span className="mono">{String(i + 1).padStart(2, "0")}</span>
-            {p.label}
-          </button>
-        ))}
-      </div>
-      <div className="progress">
-        <div style={{ width: `${((step + 1) / pipeline.length) * 100}%` }} />
-      </div>
-
-      <div className="pipe-detail" key={current.id}>
-        <span className="eyebrow">
-          Stage {step + 1} of {pipeline.length}
-        </span>
-        <h2>{current.label}</h2>
-        <p className="big">{current.detail}</p>
-        {!auto && (
-          <button className="btn ghost" onClick={() => setAuto(true)}>
-            Resume tour
-          </button>
-        )}
-      </div>
-
-      <div className="callout">
-        <strong>Why it holds up:</strong> no client file ships until the row count and ICP are approved, and only the
-        verifier may mark a row valid. A bad list costs more than a late one.
-      </div>
+    <div className="callout">
+      <strong>Why it holds up:</strong> nothing ships until the row count and the ICP are approved, and every row keeps
+      the source it came from. A bad list costs more than a late one.{" "}
+      <Link to="/contact" className="ext">
+        Start a list <Icon name="arrow" size={14} />
+      </Link>
     </div>
-  );
-};
+  </div>
+);

@@ -8,18 +8,19 @@ import {
   brandIcons,
   companies,
   experiences,
-  lessons,
   metrics,
   pipeline,
   profile,
   projects,
-  rules,
   stack,
+  stackProof,
+  standards,
   type Company,
   type Experience,
   type Project,
-  type Rule,
+  type Standard,
 } from "../src/data.ts";
+import { pipelineMotionSvg } from "../src/motion/pipelineMotion.ts";
 
 const root = dirname(fileURLToPath(import.meta.url));
 const app = join(root, "..");
@@ -208,9 +209,9 @@ type Account = {
   typing: string[];
   timeline: [string, string, string][];
   experienceIds: string[];
-  ruleIds: string[];
+  projectOrgs: string[];
   withCompanies: boolean;
-  withBrain: boolean;
+  withLangs: boolean;
   contacts: [string, string][];
 };
 
@@ -220,7 +221,7 @@ const accounts: Account[] = [
     other: "mdrobeulislam1251-ux",
     role: "Head Data Engineer · Trusted Leads",
     lede: "I turn a customer's ICP into an accurate, verified, ready-to-send lead list. At Trusted Leads I own the outbound pipeline end to end: extraction, waterfall verification, decision-maker resolution and delivery.",
-    typing: ["Accurate lists drive real growth.", "ICP in → verified leads out.", "Waterfall verified, source tracked.", "Status 200 ≠ correct work.", "NO GUESS / NO TRUST / GREEN CHECK"],
+    typing: ["Accurate lists drive real growth.", "ICP in → verified leads out.", "Scrape · verify · enrich · deliver", "Every row keeps its source.", "Built to be checked, not trusted."],
     timeline: [
       ["Aug 2024 →", "Head Data Engineer", "Trusted Leads · full-time, remote"],
       ["Aug 2024 →", "Senior Data Engineer", "Lead Gen Jay · contract, remote"],
@@ -228,9 +229,9 @@ const accounts: Account[] = [
       ["2026 →", "Verification-gated agents", "T-Ex LLM Runpack"],
     ],
     experienceIds: ["trusted-leads", "lead-gen-jay", "tex-llm"],
-    ruleIds: ["r1", "r3", "r4", "r5", "r7"],
+    projectOrgs: ["Trusted Leads", "Lead Gen Jay", "T-Ex LLM"],
     withCompanies: false,
-    withBrain: false,
+    withLangs: false,
     contacts: [
       ["Trusted Leads", "https://trustedleads.io"],
       ["Lead Gen Jay", "https://leadgenjay.com"],
@@ -241,8 +242,8 @@ const accounts: Account[] = [
     login: "mdrobeulislam1251-ux",
     other: "robeul-trusted-leads",
     role: "AI-Native Data & Automation Engineer",
-    lede: "I build the data and automation systems that turn a raw ICP into booked meetings, plus the self-hosted infrastructure they run on, and multi-agent AI that is verified before it may say \"done\".",
-    typing: ["Status 200 ≠ correct work.", "NO GUESS / NO TRUST / GREEN CHECK / STOP ON RED", "Exit code 0 means compiled, never works", "Build only the named noun + path", "Be a VA, not a bot"],
+    lede: "I build the data and automation systems that turn a raw ICP into booked meetings, run the servers and networks they live on, and ship the products around them.",
+    typing: ["From ICP to booked meeting, in one motion.", "Scraping · verification · campaigns", "Servers, networks and automations that stay up.", "Data engines, sold as products.", "Built to be checked, not trusted."],
     timeline: [
       ["Aug 2024 →", "Head Data Engineer", "Trusted Leads · full-time, remote"],
       ["Aug 2024 →", "Senior Data Engineer", "Lead Gen Jay · contract, remote"],
@@ -251,9 +252,9 @@ const accounts: Account[] = [
       ["2026 →", "Verification-gated agents", "T-Ex LLM Runpack · own project"],
     ],
     experienceIds: ["trusted-leads", "lead-gen-jay", "outboundrix"],
-    ruleIds: rules.map((r) => r.id),
+    projectOrgs: ["Trusted Leads", "Lead Gen Jay", "T-Ex LLM", "Datryxen"],
     withCompanies: true,
-    withBrain: true,
+    withLangs: true,
     contacts: [
       ["Outboundrix", "https://outboundrix.io"],
       ["Trusted Leads", "https://trustedleads.io"],
@@ -288,9 +289,9 @@ const hero = (a: Account) => {
 
   let tx = x;
   const ty = by + 82;
-  for (const t of ["Verified before it ships", "Gated AI agents", "Self-hosted"]) {
-    b += check(tx, ty - 5, T.ok) + text(tx + 20, ty, t, { fs: 14, fill: T.body });
-    tx += measure(t, 14) + 46;
+  for (const t of ["Verified before it ships", "Private by default", "One owner, end to end"]) {
+    b += check(tx, ty - 5, T.ok) + text(tx + 20, ty, t, { fs: 13, fill: T.body });
+    tx += measure(t, 13) + 34;
   }
 
   const iy = ty + 44;
@@ -322,7 +323,7 @@ const hero = (a: Account) => {
   b += `<rect x="${sx + 12}" y="${top + 14}" width="18" height="18" rx="5" fill="url(#brand)"/>`;
   b += text(sx + 21, top + 27, "R", { fs: 10.5, fill: "#fff", weight: 700, anchor: "middle" });
   b += text(sx + 36, top + 27, "Robeul Console", { fs: 11, weight: 600 });
-  ["Welcome", "Experience", "Case files", "Pipeline", "Doctrine", "Stack", "Contact"].forEach((n, i) => {
+  ["Welcome", "Experience", "Case files", "Pipeline", "Standards", "Stack", "Contact"].forEach((n, i) => {
     const ny = top + 52 + i * 25;
     if (!i) b += `<rect x="${sx + 8}" y="${ny - 4}" width="${sw - 16}" height="22" rx="6" fill="#fff" stroke="${T.line}"/>`;
     b += `<rect x="${sx + 16}" y="${ny + 2.5}" width="9" height="9" rx="2.5" fill="none" stroke="${i ? T.dim : T.accent}" stroke-width="1.4"/>`;
@@ -340,8 +341,8 @@ const hero = (a: Account) => {
     mw = wx + ww - 16 - mx;
   let my = top + 22;
   b += text(mx, my, "Welcome", { fs: 10, fill: T.muted });
-  b += dot(mx + 4, my + 15) + text(mx + 14, my + 19, "All checks green · 6 gates passed", { fs: 13.5, weight: 600 });
-  b += text(mx, my + 36, "Status 200 is not correct work. Here is the check, not the claim.", { fs: 10, fill: T.muted });
+  b += dot(mx + 4, my + 15) + text(mx + 14, my + 19, "Pipeline live · 3 jobs running", { fs: 13.5, weight: 600 });
+  b += text(mx, my + 36, "From ICP to booked meeting, verified at every step.", { fs: 10, fill: T.muted });
   my += 52;
   const kw = (mw - 16) / 3,
     kh = 64;
@@ -355,25 +356,26 @@ const hero = (a: Account) => {
     b += `<rect x="${kx + 10}" y="${ky + 50}" width="${(kw - 20) * (0.55 + (i % 3) * 0.15)}" height="3" rx="1.5" fill="${T.accent}"/>`;
   });
   my += 2 * (kh + 8) + 6;
-  const log: [string, string][] = [
-    ["claim issue", "edits unlocked"],
-    ["typecheck · drift · contract", "pass"],
-    ["waterfall verify", "source tracked"],
-    ["dedupe vs past deliveries", "dropped"],
-    ["reviewer model", "approved"],
+  const rows: [string, string, string, string, boolean][] = [
+    ["NR", "Nadia Rahman", "VP Sales · Brightline", "Verified", true],
+    ["OC", "Owen Clarke", "Founder · Harborpoint", "Verified", true],
+    ["LM", "Leah Morgan", "Ops Lead · Northgate", "Catch-all", false],
+    ["MT", "Mia Torres", "Head of RevOps · Lumora", "Verified", true],
   ];
-  const lh = 30 + log.length * 25 + 6;
+  const lh = 30 + rows.length * 30 + 4;
   b += `<rect x="${mx}" y="${my}" width="${mw}" height="${lh}" rx="8" fill="#fff" stroke="${T.line}"/>`;
   b += `<path d="M${mx} ${my + 8} a8 8 0 0 1 8 -8 h${mw - 16} a8 8 0 0 1 8 8 v18 h-${mw} z" fill="${T.bg2}"/>`;
   b += `<line x1="${mx}" y1="${my + 26}" x2="${mx + mw}" y2="${my + 26}" stroke="${T.line}"/>`;
-  b += text(mx + 10, my + 17, "verify.log", { fs: 10.5, weight: 600 }) + text(mx + mw - 10, my + 17, "5 checks", { fs: 9.5, fill: T.muted, mono: true, anchor: "end" });
-  log.forEach(([s, o], i) => {
-    const ry = my + 46 + i * 25;
-    b += `<g class="row" style="animation-delay:${0.3 + i * 0.5}s">`;
-    if (i) b += `<line x1="${mx + 10}" y1="${ry - 16}" x2="${mx + mw - 10}" y2="${ry - 16}" stroke="${T.line2}"/>`;
-    b += check(mx + 11, ry - 4, T.ok) + text(mx + 30, ry, s, { fs: 10.5, mono: true, fill: T.body });
-    const p = pill(0, 0, o, T.ok, T.okBg, 9);
-    b += pill(mx + mw - 10 - p.w, ry - 13, o, T.ok, T.okBg, 9).svg + `</g>`;
+  b += text(mx + 10, my + 17, "People", { fs: 10.5, weight: 600 }) + text(mx + mw - 10, my + 17, "example data", { fs: 9.5, fill: T.muted, mono: true, anchor: "end" });
+  rows.forEach(([ini, name, role, st, ok], i) => {
+    const ry = my + 26 + i * 30;
+    const [fg, bg] = ok ? [T.ok, T.okBg] : ["#b45309", "#fef6e7"];
+    b += `<g class="row" style="animation-delay:${0.3 + i * 0.45}s">`;
+    if (i) b += `<line x1="${mx + 10}" y1="${ry}" x2="${mx + mw - 10}" y2="${ry}" stroke="${T.line2}"/>`;
+    b += `<circle cx="${mx + 20}" cy="${ry + 15}" r="9" fill="${T.line2}"/>` + text(mx + 20, ry + 18, ini, { fs: 7.5, weight: 600, fill: T.body, anchor: "middle" });
+    b += text(mx + 36, ry + 13, name, { fs: 10, weight: 600 }) + text(mx + 36, ry + 24, role, { fs: 8.5, fill: T.muted });
+    const pw = pill(0, 0, st, fg, bg, 9).w;
+    b += pill(mx + mw - 10 - pw, ry + 8, st, fg, bg, 9).svg + `</g>`;
   });
 
   // floating notification, the signature outboundrix.io move
@@ -383,10 +385,10 @@ const hero = (a: Account) => {
     fh = 92;
   b += `<g filter="url(#sh)"><rect x="${fx}" y="${fy}" width="${fw}" height="${fh}" rx="12" fill="#fff" stroke="${T.line}"/></g>`;
   b += `<rect x="${fx + 14}" y="${fy + 14}" width="22" height="22" rx="6" fill="${T.ink}"/>` + check(fx + 19, fy + 25, "#fff");
-  b += text(fx + 46, fy + 30, "Verification gate", { fs: 13.5, weight: 600 }) + text(fx + fw - 14, fy + 30, "just now", { fs: 11, fill: T.muted, mono: true, anchor: "end" });
-  b += text(fx + 14, fy + 54, "Reviewer model approved. Ran, observed, then done.", { fs: 11.5, fill: T.body });
-  const p1 = pill(fx + 14, fy + 63, "Observed passing", T.ok, T.okBg, 10.5);
-  b += p1.svg + text(fx + 22 + p1.w, fy + 77, "edits relocked", { fs: 11, fill: T.muted });
+  b += text(fx + 46, fy + 30, "Nadia Rahman replied", { fs: 13.5, weight: 600 }) + text(fx + fw - 14, fy + 30, "just now", { fs: 11, fill: T.muted, mono: true, anchor: "end" });
+  b += text(fx + 14, fy + 54, "“Thursday works, send the invite.”", { fs: 11.5, fill: T.body });
+  const p1 = pill(fx + 14, fy + 63, "Meeting booked", T.ok, T.okBg, 10.5);
+  b += p1.svg + text(fx + 22 + p1.w, fy + 77, "from a verified list", { fs: 11, fill: T.muted });
 
   return svg(W, H, b, `${profile.name}, ${a.role}. Open the console.`);
 };
@@ -447,7 +449,9 @@ const CASE_W = 590,
 const catColor: Record<Project["category"], [string, string]> = {
   Data: [T.accent, "#eef1fd"],
   Infrastructure: [T.ok, T.okBg],
+  Automation: ["#c23a5c", "#fdeef2"],
   "AI Agents": [T.violet, "#f3eefe"],
+  Product: ["#0a7ea4", "#e8f6fb"],
 };
 const caseCard = (p: Project) => {
   let b = cardHeader(CASE_W, 46);
@@ -522,71 +526,41 @@ const pipelineCard = () => {
     b += `<circle cx="${x + 18}" cy="52" r="15" fill="${last ? T.okBg : "#eef1fd"}"/>`;
     b += text(x + 18, 56.5, String(i + 1), { fs: 12.5, fill: last ? T.ok : T.accent, weight: 600, mono: true, anchor: "middle" });
     b += text(x + 2, 104, p.label, { fs: 17.5, weight: 600, ls: -0.3 });
-    b += text(x + 2, 130, wrap(p.detail, cw - 22, 14, "sans", 5), { fs: 14, fill: T.body, lh: 21 });
+    b += text(x + 2, 130, wrap(p.detail, cw - 22, 14, "sans", 6), { fs: 14, fill: T.body, lh: 21 });
   });
-  return svg(W, 250, b, "The pipeline: ICP in, verified leads out");
+  return svg(W, 272, b, "The pipeline: ICP in, verified leads out");
 };
 
-const doctrineCard = (ruleList: Rule[], withLessons: boolean) => {
-  const words = ["NO GUESS", "NO TRUST", "GREEN CHECK", "STOP ON RED", "IDEMPOTENT", "NO FAKE DONE"];
-  let b = "";
-  let x = 32;
-  for (const w of words) {
-    const cw = Math.round(measure(w, 12.5, "mono") + 26);
-    b += `<rect x="${x}" y="30" width="${cw}" height="32" rx="8" fill="#fff" stroke="${T.line}"/>`;
-    b += text(x + cw / 2, 50.5, w, { fs: 12.5, weight: 500, mono: true, anchor: "middle" });
-    x += cw + 8;
-  }
+const standardsCard = (list: Standard[]) => {
   const cols = 3,
     gap = 14,
     cw = (W - 64 - gap * (cols - 1)) / cols,
-    ch = 168;
-  ruleList.forEach((r, i) => {
+    ch = 172;
+  let b = "";
+  list.forEach((r, i) => {
     const cx = 32 + (i % cols) * (cw + gap),
-      cy = 86 + Math.floor(i / cols) * (ch + gap);
+      cy = 28 + Math.floor(i / cols) * (ch + gap);
     b += `<rect x="${cx}" y="${cy}" width="${cw}" height="${ch}" rx="12" fill="#fff" stroke="#d6d9df" stroke-dasharray="4 3"/>`;
-    b += `<circle cx="${cx + 35}" cy="${cy + 35}" r="13" fill="#eef1fd"/>` + text(cx + 35, cy + 39.5, String(r.n), { fs: 12, fill: T.accent, weight: 600, mono: true, anchor: "middle" });
+    b += `<circle cx="${cx + 35}" cy="${cy + 35}" r="13" fill="${T.okBg}"/>` + check(cx + 29, cy + 35, T.ok);
     const t = wrap(r.title, cw - 44, 16.5, "bold", 2);
     b += text(cx + 22, cy + 80, t, { fs: 16.5, weight: 600, lh: 22 });
     b += text(cx + 22, cy + 80 + t.length * 22 + 6, wrap(r.detail, cw - 44, 13.5, "sans", 3), { fs: 13.5, fill: T.body, lh: 20 });
   });
-  let y = 86 + Math.ceil(ruleList.length / cols) * (ch + gap) + 6;
-  if (withLessons) {
-    const th = 40,
-      rh = 44;
-    b += `<rect x="32" y="${y}" width="${W - 64}" height="${th + lessons.length * rh}" rx="12" fill="#fff" stroke="${T.line}"/>`;
-    b += `<path d="M32 ${y + 12} a12 12 0 0 1 12 -12 h${W - 88} a12 12 0 0 1 12 12 v${th - 12} h-${W - 64} z" fill="${T.bg2}"/>`;
-    b += `<line x1="32" y1="${y + th}" x2="${W - 32}" y2="${y + th}" stroke="${T.line}"/>`;
-    b += text(52, y + 25, "Lesson", { fs: 12.5, fill: T.muted, weight: 500 }) + text(640, y + 25, "Rule it produced", { fs: 12.5, fill: T.muted, weight: 500 });
-    lessons.forEach((l, i) => {
-      const ry = y + th + i * rh;
-      if (i) b += `<line x1="32" y1="${ry}" x2="${W - 32}" y2="${ry}" stroke="${T.line2}"/>`;
-      b += text(52, ry + 27, wrap(l.lesson, 560, 14, "sans", 1), { fs: 14, fill: T.body });
-      b += check(620, ry + 22) + text(640, ry + 27, wrap(l.rule, 500, 14, "bold", 1), { fs: 14, weight: 600 });
-    });
-    y += th + lessons.length * rh + 6;
-  }
-  return svg(W, y + 26, b, "Doctrine: six words, then the kill switches");
+  return svg(W, 28 + Math.ceil(list.length / cols) * (ch + gap) + 14, b, "Standards: what you can hold me to");
 };
 
-/** The skills card: every track, a depth bar, and every skill as a branded chip. */
-const depth: Record<string, number> = { "AI & Agents": 95, Data: 92, "Automation & APIs": 90, "GTM Systems": 88, Infrastructure: 90, Languages: 85 };
+/** The skills card: every track, one line of proof, and every skill as a branded chip. */
 const skillsCard = () => {
   let b = "";
   let y = 28;
   Object.entries(stack).forEach(([track, items], i) => {
     if (i) b += `<line x1="32" y1="${y - 14}" x2="${W - 32}" y2="${y - 14}" stroke="${T.line2}"/>`;
     b += text(32, y + 18, track, { fs: 16, weight: 600 });
-    b += text(32, y + 40, `${items.length} skills`, { fs: 12.5, fill: T.muted });
-    const d = depth[track];
-    if (d) {
-      b += `<rect x="32" y="${y + 52}" width="200" height="5" rx="2.5" fill="${T.line2}"/>`;
-      b += `<rect x="32" y="${y + 52}" width="0" height="5" rx="2.5" fill="url(#brand)"><animate attributeName="width" to="${2 * d}" dur="1.1s" begin="${0.1 + i * 0.12}s" fill="freeze"/></rect>`;
-      b += text(244, y + 58, String(d), { fs: 11.5, fill: T.accent, mono: true, weight: 600 });
-    }
+    const proof = wrap(stackProof[track] ?? "", 230, 12.5, "sans", 3);
+    b += text(32, y + 40, proof, { fs: 12.5, fill: T.muted, lh: 18 });
     const chips = chipRow(300, y, W - 32, items, 13);
     b += chips.svg;
-    y = Math.max(chips.bottom, y + 64) + 30;
+    y = Math.max(chips.bottom, y + 40 + proof.length * 18) + 30;
   });
   return svg(W, y - 2, b, "Skills by track, with the tools I actually use");
 };
@@ -594,20 +568,22 @@ const skillsCard = () => {
 /** "Works with the tools you already run" logo wall. */
 const toolsCard = () => {
   const tools: [string, string?][] = [
-    ["Apollo.io"], ["Instantly"], ["Smartlead"], ["MillionVerifier", "MV"], ["Reacher", "R"], ["n8n"],
-    ["Claude Code"], ["Supabase"], ["PostgreSQL"], ["Docker"], ["Tailscale"], ["Cloudflare Tunnels"],
+    ["Apollo.io"], ["Instantly"], ["Smartlead"], ["MillionVerifier", "MV"], ["Reacher", "R"], ["HubSpot"],
+    ["n8n"], ["Claude Code"], ["PostgreSQL"], ["Supabase"], ["GitHub Actions"], ["Docker"],
+    ["Ubuntu"], ["Tailscale"], ["WireGuard"], ["Cloudflare Tunnels"], ["Caddy"], ["MikroTik RouterOS"],
   ];
   const cols = 6,
     cw = (W - 64) / cols;
-  let b = text(W / 2, 40, "GTM and platform tools I run every day", { fs: 14, fill: T.body, weight: 500, anchor: "middle" });
+  let b = text(W / 2, 40, "GTM, platform and network tools I run every day", { fs: 14, fill: T.body, weight: 500, anchor: "middle" });
   tools.forEach(([name, mono], i) => {
     const x = 32 + (i % cols) * cw,
       y = 66 + Math.floor(i / cols) * 58;
     b += `<rect x="${x + 6}" y="${y}" width="${cw - 12}" height="46" rx="10" fill="#fff" stroke="${T.line}"/>`;
     b += mono ? monogram(mono, x + 18, y + 11, 24) : brandMark(name, x + 18, y + 11, 24);
-    b += text(x + 52, y + 28, name === "Cloudflare Tunnels" ? "Cloudflare" : name === "Claude Code" ? "Claude" : name, { fs: 14.5, weight: 600 });
+    const short: Record<string, string> = { "Cloudflare Tunnels": "Cloudflare", "Claude Code": "Claude", "MikroTik RouterOS": "MikroTik", "GitHub Actions": "Actions" };
+    b += text(x + 52, y + 28, short[name] ?? name, { fs: 14.5, weight: 600 });
   });
-  return svg(W, 66 + 2 * 58 + 18, b, "Tools I run every day");
+  return svg(W, 66 + Math.ceil(tools.length / cols) * 58 + 18, b, "Tools I run every day");
 };
 
 const COMPANY_H = 260;
@@ -623,101 +599,6 @@ const companyCard = (c: Company) => {
   b += text(24, 180, wrap(c.body, 540, 14.5, "sans", 3), { fs: 14.5, fill: T.body, lh: 22 });
   if (c.url) b += text(CASE_W - 24, 56, `${new URL(c.url).hostname.replace("www.", "")}  ↗`, { fs: 13.5, fill: T.accent, anchor: "end", deco: "underline" });
   return svg(CASE_W, COMPANY_H, b, `${c.name}: ${c.tagline}`);
-};
-
-const brainCard = () => {
-  const stats: [string, string][] = [
-    ["541", "curated notes"],
-    ["3,141", "archived session logs"],
-    ["571", "sessions audited"],
-    ["7", "kill switches"],
-    ["53 / 44", "agents / doctrine skills"],
-  ];
-  const principles: [string, string][] = [
-    ["Live beats notes.", "A wrong fact in the brain is worse than no fact. Every fact carries the command that proved it, and the date."],
-    ["Decisions, not diaries.", "Git records the doing. The brain records the why, and what was tried and rejected."],
-    ["An emotion governor, not feelings.", "A prompt hook classifies each message as Frustrated, Correction, Build, Ask or Focus. Frustration means stop, load state, then act."],
-    ["Per-project brains.", "Boundaries, verified state and a verification recipe, loaded at session start."],
-  ];
-  const sw = (W - 64) / 5;
-  let b = `<rect x="32" y="28" width="${W - 64}" height="92" rx="12" fill="#fff" stroke="${T.line}"/>`;
-  stats.forEach(([v, l], i) => {
-    const x = 32 + i * sw;
-    if (i) b += `<line x1="${x}" y1="28" x2="${x}" y2="120" stroke="${T.line}"/>`;
-    b += text(x + 22, 72, v, { fs: 28, weight: 600, ls: -0.8 });
-    b += text(x + 22, 98, l, { fs: 13, fill: T.muted });
-  });
-  const cw = (W - 64 - 32) / 2;
-  principles.forEach(([h, d], i) => {
-    const x = 32 + (i % 2) * (cw + 32),
-      y = 160 + Math.floor(i / 2) * 84;
-    b += check(x + 2, y - 5) + text(x + 26, y, h, { fs: 16, weight: 600 });
-    b += text(x + 26, y + 24, wrap(d, cw - 30, 14, "sans", 2), { fs: 14, fill: T.body, lh: 21 });
-  });
-  return svg(W, 160 + 2 * 84 + 10, b, "The second brain");
-};
-
-const devLoopCard = () => {
-  const g: [string, string][] = [
-    ["Work commits on the dev server through gates", "typecheck · API drift · sweep contract. Fail = no commit, error posted to the issue. Edits refused until an issue is claimed."],
-    ["The dev server cannot push to GitHub", "No token, no helper, no gh. git push denied in settings."],
-    ["Server → laptop only when I ask", "No cron, no watcher, no timer."],
-    ["Laptop → GitHub on one dev branch", "Branch hardcoded in the publisher; protected branches refused server-side."],
-    ["The owner merges when I say", "main is read-only to the whole system."],
-    ["No credentials ever reach GitHub", "A content-scanning guard aborts on JWTs, live keys, tokens, private keys."],
-  ];
-  const flow = [
-    ["laptop", "open the right workspace"],
-    ["agent", "claim an issue        → edits unlock"],
-    ["", "build → run → observe  screenshots, curls"],
-    ["", "commit through gates  → fail blocks + logs"],
-    ["me", "publish from laptop   → guard first, read back"],
-    ["", "deploy                → pull-based, /health"],
-    ["", "say when to merge     → main stays the owner's"],
-  ];
-  const gates: [string, string][] = [
-    ["Schemas, migrations, architecture", "cto"],
-    ["UI implementation", "design-system-engineer"],
-    ["AI / prompt changes", "ai-eval-engineer"],
-    ["Bug fixes", "regression-tester"],
-    ["Releases", "engineering-manager + qa"],
-  ];
-  // left: the guarantees, as a numbered sequence
-  const lx = 32,
-    lw = 560;
-  let b = cardHeader(W, 48);
-  b += text(24, 30, "Dev loop", { fs: 14, weight: 600 }) + text(W - 24, 30, "6 guarantees · 5 review gates", { fs: 12, fill: T.muted, mono: true, anchor: "end" });
-  let y = 84;
-  g.forEach(([h, d], i) => {
-    if (i < g.length - 1) b += `<line x1="${lx + 13}" y1="${y + 14}" x2="${lx + 13}" y2="${y + 52}" stroke="${T.line}"/>`;
-    b += `<circle cx="${lx + 13}" cy="${y}" r="12" fill="#eef1fd"/>` + text(lx + 13, y + 4.5, String(i + 1), { fs: 11.5, fill: T.accent, weight: 600, mono: true, anchor: "middle" });
-    b += text(lx + 38, y + 5, h, { fs: 15, weight: 600 });
-    const dl = wrap(d, lw - 50, 13.5, "sans", 2);
-    b += text(lx + 38, y + 26, dl, { fs: 13.5, fill: T.body, lh: 19 });
-    y += 46 + dl.length * 19;
-  });
-  // right: the flow and the review gates
-  const rx = 630,
-    rw = W - 32 - rx;
-  const fh = 30 + flow.length * 22;
-  b += `<rect x="${rx}" y="72" width="${rw}" height="${fh}" rx="10" fill="${T.bg2}" stroke="${T.line}"/>`;
-  flow.forEach(([who, what], i) => {
-    const fy = 100 + i * 22;
-    if (who) b += text(rx + 18, fy, who, { fs: 12, fill: T.accent, mono: true, weight: 600 });
-    b += text(rx + 82, fy, what, { fs: 12, fill: T.body, mono: true });
-  });
-  let gy = 72 + fh + 22;
-  b += text(rx, gy, "Review gates by deliverable", { fs: 13.5, weight: 600 });
-  gy += 14;
-  b += `<rect x="${rx}" y="${gy}" width="${rw}" height="${gates.length * 34}" rx="10" fill="#fff" stroke="${T.line}"/>`;
-  gates.forEach(([what, who], i) => {
-    const ry = gy + i * 34;
-    if (i) b += `<line x1="${rx}" y1="${ry}" x2="${rx + rw}" y2="${ry}" stroke="${T.line2}"/>`;
-    b += text(rx + 16, ry + 22, what, { fs: 13.5, fill: T.body });
-    b += text(rx + rw - 16, ry + 22, who, { fs: 12, fill: T.ink, mono: true, anchor: "end" });
-  });
-  const H = Math.max(y, gy + gates.length * 34 + 24) + 4;
-  return svg(W, H, b, "The dev loop and its six guarantees");
 };
 
 const connectCard = (a: Account) => {
@@ -758,7 +639,7 @@ const build = (a: Account) => {
     ["Experience", "experience", false],
     ["Case files", "projects", false],
     ["Pipeline", "pipeline", false],
-    ["Doctrine", "doctrine", false],
+    ["Standards", "standards", false],
     ["Stack", "stack", false],
     ["Contact", "contact", false],
   ];
@@ -767,20 +648,17 @@ const build = (a: Account) => {
   const exps = a.experienceIds.map((id) => experiences.find((e) => e.id === id)!);
   exps.forEach((e) => put(`exp-${e.id}.svg`, experienceCard(e)));
   put("timeline.svg", timelineCard(a));
-  projects.forEach((p) => put(`case-${p.id}.svg`, caseCard(p)));
+  const shown = projects.filter((p) => a.projectOrgs.includes(p.org)).map((p, i) => ({ ...p, chapter: i + 1 }));
+  shown.forEach((p) => put(`case-${p.id}.svg`, caseCard(p)));
   put("case-cta.svg", ctaCard("The full documentary", "Every chapter, in the console", "Filter, search, and read each act.", CASE_H));
   put("skills.svg", skillsCard());
   put("tools.svg", toolsCard());
   put("pipeline.svg", pipelineCard());
-  const ruleList = rules.filter((r) => a.ruleIds.includes(r.id));
-  put("doctrine.svg", doctrineCard(ruleList, a.withBrain));
+  put("motion.svg", pipelineMotionSvg({ id: "m", asset: logo, framed: true }));
+  put("standards.svg", standardsCard(standards));
   if (a.withCompanies) {
     companies.forEach((c) => put(`co-${c.id}.svg`, companyCard(c)));
     put("co-cta.svg", ctaCard("One data engine", "Several faces", "See how they fit together.", COMPANY_H));
-  }
-  if (a.withBrain) {
-    put("brain.svg", brainCard());
-    put("devloop.svg", devLoopCard());
   }
   put("connect.svg", connectCard(a));
 
@@ -798,7 +676,7 @@ const build = (a: Account) => {
     return rows.join("\n<br/>\n");
   };
 
-  const caseItems: [string, string, string][] = projects.map((p) => [`case-${p.id}.svg`, `Case file: ${p.title}`, page(`projects/${p.id}`)]);
+  const caseItems: [string, string, string][] = shown.map((p) => [`case-${p.id}.svg`, `Case file: ${p.title}`, page(`projects/${p.id}`)]);
   caseItems.push(["case-cta.svg", "All case files in the console", page("projects")]);
 
   const typing =
@@ -812,6 +690,7 @@ const build = (a: Account) => {
   md.push(`<div align="center">\n\n${img("hero.svg", `${profile.name}, ${a.role}. Open the console.`, CONSOLE)}\n`);
   md.push(nav.map(([l, r], i) => `<a href="${r ? page(r) : CONSOLE}"><img src="${A}/nav-${i}.svg" height="36" alt="${l}" /></a>`).join("\n"));
   md.push(`\n<br/><br/>\n\n<a href="${CONSOLE}"><img src="${typing}" alt="${esc(a.typing[0])}" /></a>\n`);
+  md.push(`<br/>\n\n${img("motion.svg", "From ICP to booked meeting: scrape, verify, dedupe, enrich, deliver, campaign", page("pipeline"))}\n`);
   md.push(`</div>\n\n<br/>\n\n<div align="center">\n`);
 
   md.push(head("Experience", "Where the work happens", a.withCompanies
@@ -827,7 +706,7 @@ const build = (a: Account) => {
   md.push(pair(caseItems));
   md.push(`\n<br/><br/>\n`);
 
-  md.push(head("Skills", "What I actually use", "Seven tracks from the CV. Depth measured in shipped systems, not years.", "stack"));
+  md.push(head("Skills", "What I actually use", "Eleven tracks, each backed by work that runs in production today.", "stack"));
   md.push("");
   md.push(img("skills.svg", "Skills by track", page("stack")));
   md.push("");
@@ -835,7 +714,7 @@ const build = (a: Account) => {
   md.push(`
 <br/><br/>
 
-<a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=python,ts,js,nextjs,react,nodejs,express,fastapi,postgres,supabase,elasticsearch,docker,linux,ubuntu,bash,nginx,cloudflare,aws,vercel,git,github,githubactions,vscode,kotlin&perline=12&theme=light" alt="Tech stack icons" /></a>
+<a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=python,ts,js,nextjs,react,nodejs,express,fastapi,graphql,postgres,supabase,elasticsearch,docker,linux,ubuntu,bash,powershell,nginx,cloudflare,aws,vercel,git,github,githubactions,kotlin,androidstudio,swift,vscode&perline=14&theme=light" alt="Tech stack icons" /></a>
 
 </div>
 
@@ -854,7 +733,7 @@ ${Object.entries(stack).map(([t, items]) => `| **${t}** | ${items.join(", ")} |`
 <div align="center">
 `);
 
-  md.push(head("The pipeline", "ICP in, verified leads out", "Every list goes through the same six stages. No client file ships until the row count and ICP are approved.", "pipeline"));
+  md.push(head("The pipeline", "ICP in, verified leads out", "Every list goes through the same seven stages, so what reaches your inbox is accurate before anyone sends to it.", "pipeline"));
   md.push("");
   md.push(img("pipeline.svg", "The six-stage outbound data pipeline", page("pipeline")));
   md.push(`\n<br/>\n`);
@@ -868,66 +747,19 @@ ${Object.entries(stack).map(([t, items]) => `| **${t}** | ${items.join(", ")} |`
     md.push(`\n<br/><br/>\n`);
   }
 
-  md.push(
-    head(
-      "Doctrine",
-      a.withBrain ? "Six words, then seven kill switches" : "How I work",
-      "These live in the brain every agent loads before it touches my work. They came from auditing 571 real sessions.",
-      "doctrine",
-    ),
-  );
+  md.push(head("Standards", "What you can hold me to", "Six commitments that come with every list, every server and every automation I deliver.", "standards"));
   md.push("");
-  md.push(img("doctrine.svg", "Doctrine and kill switches", page("doctrine")));
+  md.push(img("standards.svg", "Standards", page("standards")));
   md.push(`\n</div>\n`);
-
-  if (a.withBrain) {
-    md.push(`<details>
-<summary><b>Operating rules, distilled from a 571-session audit</b></summary>
-
-\`\`\`text
-1  NO FALSE DONE                      5  REMOVE, DON'T ADD
-2  BUILD ONLY THE NAMED NOUN + PATH   6  ONE WORKSPACE, DEPLOY IT
-3  STOP GAZING, LOAD STATE FIRST      7  ON ANGER -> KILL, THEN ACT
-4  FOLLOW HIS DOCUMENTED PATTERN
-\`\`\`
-
-**How to work with me**, as written for the agents: default to execution, not questions. No A/B/C menus; I would rather correct a confident default than narrate a spec from scratch. Minimum-viable-correct: do it natively, don't over-build. Finish one layer before the next. Stuck means "tried X, saw Y, stuck at Z". Three failed attempts or two repeated corrections is a hard stop. Surface the real bottleneck, which is often human or supply, not code.
-
-</details>
-
-<details>
-<summary><b>In my own words</b>: what I actually typed into agent sessions</summary>
-<br/>
-
-> "I wouldn't love to work with an AI agent that keeps me questioning all the time, saying plans and forcing me to submit commands. The agent should behave like my real worker."
-
-> "If something is actually not possible with the current resources, say so honestly, rather than trying it with a 0% chance of winning."
-
-> "Stop the circling. Complete the config, done, or say not possible."
-
-> "You had the SSH access. Why are you asking me to execute it all myself?"
-
-</details>
-`);
-    md.push(`<br/>\n\n<div align="center">\n`);
-    md.push(head("Second brain", "The brain is a file system, not a chat history", "Versioned, so it survives machines. One machine + GitHub, nothing else.", "-"));
-    md.push("");
-    md.push(img("brain.svg", "The second brain"));
-    md.push(`\n<br/>\n`);
-    md.push(head("Dev loop", "Six guarantees, enforced by the system", "Gates decide what gets committed. The owner decides what gets merged.", "-"));
-    md.push("");
-    md.push(img("devloop.svg", "The dev loop and its six guarantees"));
-    md.push(`\n</div>\n`);
-  }
 
   md.push(`<br/>\n\n<div align="center">\n`);
   md.push(head("Activity", "Shipping, in public", "Live GitHub stats, styled to match.", "-"));
   md.push(`
 <img height="170" src="https://github-readme-stats.vercel.app/api?username=${a.login}&include_all_commits=true&count_private=true&${stats}" alt="GitHub stats" />
-${a.withBrain ? `<img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=${a.login}&layout=compact&langs_count=8&${stats}" alt="Top languages" />` : ""}
+${a.withLangs ? `<img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=${a.login}&layout=compact&langs_count=8&${stats}" alt="Top languages" />` : ""}
 
 <img src="https://streak-stats.demolab.com?user=${a.login}&${streak}" alt="Streak" />
-${a.withBrain ? `
+${a.withLangs ? `
 <br/><br/>
 
 <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=${a.login}&theme=github" width="100%" alt="Profile details" />

@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import { useList } from "@refinedev/core";
-import { metrics, profile, type Project } from "../data";
+import { companies, metrics, profile, type Project } from "../data";
 import { Icon } from "../components/Icon";
+import { PipelineMotion } from "../components/PipelineMotion";
 
 const Counter = ({ value, decimals, suffix }: { value: number; decimals: number; suffix: string }) => {
   const [shown, setShown] = useState(0);
@@ -28,24 +29,9 @@ const Counter = ({ value, decimals, suffix }: { value: number; decimals: number;
   );
 };
 
-const log = [
-  ["$", "claim issue", "edits unlocked"],
-  ["✓", "typecheck · API drift · contract", "gates pass"],
-  ["✓", "waterfall verify", "source tracked per row"],
-  ["✓", "dedupe vs past deliveries", "duplicates dropped"],
-  ["✓", "reviewer model", "approved"],
-  ["●", "status", "observed passing · done"],
-];
-
 export const Welcome = () => {
-  const [lines, setLines] = useState(0);
   const { result } = useList<Project>({ resource: "projects", sorters: [{ field: "chapter", order: "asc" }] });
-
-  useEffect(() => {
-    if (lines >= log.length) return;
-    const t = setTimeout(() => setLines((n) => n + 1), lines === 0 ? 400 : 650);
-    return () => clearTimeout(t);
-  }, [lines]);
+  const building = companies.filter((c) => ["outboundrix", "tex-llm", "datryxen", "ready-list"].includes(c.id));
 
   return (
     <div className="page welcome">
@@ -55,55 +41,38 @@ export const Welcome = () => {
             <span className="pulse" /> Welcome, thanks for stopping by
           </span>
           <h1>
-            Hi, I'm Robeul. <br />
-            <span className="grad">I build systems you don't have to double-check.</span>
+            Hi, I'm Robeul. <span className="grad">
+              I build systems you don't have to <span className="nowrap">double-check.</span>
+            </span>
           </h1>
           <p className="lede">
-            I turn a customer's ICP into a verified, ready-to-send lead list, and I build AI agents that aren't
-            allowed to say "done" until the work actually ran. Everything here is something I shipped and run in
-            production today, not a mockup.
+            I turn a customer's ICP into a verified, ready-to-send lead list, run the servers and automations behind it,
+            and carry it all the way to a booked meeting. Everything here is something I shipped and run today.
           </p>
-          <div className="note">
-            <strong>A note before you scroll.</strong> Trust is the product. Status 200 is not correct work, so I
-            show the check, not just the claim. If something here isn't true, it shouldn't be here.
-            <span className="sig">— {profile.name}</span>
-          </div>
           <div className="cta-row">
-            <Link to="/projects" className="btn primary">
-              Watch the case files <Icon name="arrow" size={16} />
+            <Link to="/pipeline" className="btn primary">
+              Watch the pipeline <Icon name="arrow" size={16} />
             </Link>
             <Link to="/contact" className="btn link">
               Work with me
             </Link>
           </div>
           <div className="trust-row">
-            {["Verified before it ships", "Gated AI agents", "Self-hosted"].map((t) => (
+            {["Verified before it ships", "Your data stays yours", "One owner, end to end"].map((t) => (
               <span key={t}>
                 <Icon name="check" size={15} /> {t}
               </span>
             ))}
           </div>
         </div>
-
-        <div className="hero-panel" aria-label="verification log">
-          <div className="panel-bar">
-            <i />
-            <i />
-            <i />
-            <span>robeul.console / verify.log</span>
-          </div>
-          <ul className="log">
-            {log.slice(0, lines).map(([mark, step, outcome]) => (
-              <li key={step} className={mark === "●" ? "final" : ""}>
-                <b>{mark}</b>
-                <span>{step}</span>
-                <em>{outcome}</em>
-              </li>
-            ))}
-            {lines < log.length && <li className="cursor">▍</li>}
-          </ul>
+        <div className="note">
+          <strong>A note before you scroll.</strong> Trust is the product. A green status code is not correct work, so I
+          show the result, not just the claim. If something here isn't true, it shouldn't be here.
+          <span className="sig">— {profile.name}</span>
         </div>
       </section>
+
+      <PipelineMotion id="pm-home" />
 
       <section className="metrics">
         {metrics.map((m) => (
@@ -120,26 +89,30 @@ export const Welcome = () => {
       <section className="now">
         <div>
           <span className="eyebrow">What I'm building right now</span>
-          <h2>Agents that have to prove it.</h2>
+          <h2>The same data engine, carried all the way to revenue.</h2>
           <p>
-            AI coding agents love to report work as complete when it never ran. In T-Ex LLM, stop hooks hold the
-            agent until a verification gate passes, role locks stop a builder approving its own work, and a separate
-            reviewer model checks every result. 53 agents, 9 teams, 44 doctrine skills, and one rule: no fake done.
+            Lists are only the start. I'm building the products around them: an outbound CRM that sends from your own
+            mailboxes, a self-serve data platform, a campaign factory, and AI agents that finish the work instead of
+            describing it.
           </p>
-          <Link to="/projects/verification-gated-agents" className="btn ghost">
-            Open the case file <Icon name="arrow" size={16} />
+          <Link to="/companies" className="btn ghost">
+            See the companies <Icon name="arrow" size={16} />
           </Link>
         </div>
-        <ol className="gates">
-          {["Claim an issue", "Build → run → observe", "Gate: typecheck · drift · contract", "Reviewer model", "Owner merges"].map(
-            (g, i) => (
-              <li key={g}>
-                <span>{String(i + 1).padStart(2, "0")}</span>
-                {g}
-              </li>
-            ),
-          )}
-        </ol>
+        <ul className="building">
+          {building.map((c) => (
+            <li key={c.id}>
+              <img src={c.logo} alt="" />
+              <div>
+                <strong>{c.name}</strong>
+                <small>{c.tagline}</small>
+              </div>
+              <span className="live">
+                <span className="pulse" /> Live
+              </span>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section>
