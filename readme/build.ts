@@ -299,7 +299,7 @@ const hero = (a: Account) => {
   b += `<circle cx="${x + 20}" cy="${iy + 20}" r="21.5" fill="#fff" stroke="${T.line}"/>`;
   b += `<image href="${avatarUri(a.login)}" x="${x}" y="${iy}" width="40" height="40" clip-path="url(#me)"/>`;
   b += text(x + 54, iy + 17, `${profile.name} · ${a.role}`, { fs: 14.5, weight: 600 });
-  b += text(x + 54, iy + 36, "Bogura, Bangladesh · remote on US hours · Bengali, English", { fs: 13, fill: T.muted });
+  b += text(x + 54, iy + 36, "Remote from Bangladesh · US Eastern hours · open to new roles", { fs: 13, fill: T.muted });
   const H = iy + 76;
 
   // product window
@@ -511,7 +511,7 @@ const timelineCard = (a: Account) => {
     b += text(tx, 138 + rl.length * 20 + 4, wrap(org, step - 20, 13, "sans", 2), { fs: 13, fill: T.muted, anchor, lh: 18 });
   });
   b += `<line x1="40" y1="${H - 46}" x2="${W - 40}" y2="${H - 46}" stroke="${T.line2}"/>`;
-  b += text(W / 2, H - 20, "Bogura, Bangladesh · remote on US hours · Bengali, English", { fs: 13, fill: T.muted, anchor: "middle" });
+  b += text(W / 2, H - 20, "Bogura, Bangladesh · remote, US Eastern hours · contract or full-time · English, Bengali", { fs: 13, fill: T.muted, anchor: "middle" });
   return svg(W, H, b, "Career timeline");
 };
 
@@ -608,11 +608,11 @@ const connectCard = (a: Account) => {
   b += `<g filter="url(#sh)"><circle cx="600" cy="80" r="44" fill="#fff"/></g>`;
   b += `<clipPath id="av2"><circle cx="600" cy="80" r="40"/></clipPath>`;
   b += `<image href="${avatarUri(a.login)}" x="560" y="40" width="80" height="80" clip-path="url(#av2)"/>`;
-  const pw = Math.round(measure("Open to conversations", 12.5, "mono") + 44);
+  const pw = Math.round(measure("Open to remote roles", 12.5, "mono") + 44);
   b += `<rect x="${600 - pw / 2}" y="140" width="${pw}" height="28" rx="14" fill="#fff" fill-opacity=".85" stroke="${T.line}"/>`;
-  b += dot(600 - pw / 2 + 17, 154) + text(600 - pw / 2 + 30, 158.5, "Open to conversations", { fs: 12.5, fill: T.body, mono: true });
+  b += dot(600 - pw / 2 + 17, 154) + text(600 - pw / 2 + 30, 158.5, "Open to remote roles", { fs: 12.5, fill: T.body, mono: true });
   b += text(600, 216, "Let's build something you can trust.", { fs: 36, weight: 700, ls: -1, anchor: "middle" });
-  b += text(600, 252, `Data engineering, verification pipelines and agent infrastructure. Remote on US hours from ${profile.location}.`, {
+  b += text(600, 252, `GTM data pipelines, automation and AI agents. Remote from ${profile.location} on US Eastern hours, contract or full-time.`, {
     fs: 15.5,
     fill: T.body,
     anchor: "middle",

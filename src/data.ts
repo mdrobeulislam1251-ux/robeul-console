@@ -44,9 +44,9 @@ export type Standard = {
 
 export const profile = {
   name: "MD Robeul Islam",
-  title: "Head Data Engineer · AI-Native Automation",
+  title: "GTM & Data Engineer · AI Agents & Automation",
   location: "Bogura, Bangladesh",
-  hours: "Remote · US hours",
+  hours: "Remote · US Eastern hours",
   email: "mdrobeulislam1251@gmail.com",
   linkedin: "https://www.linkedin.com/in/mdrobeulislam1251",
   github: {
@@ -364,9 +364,9 @@ export const stack: Record<string, string[]> = {
   "AI & Agents": ["Claude Agent SDK", "Claude Code", "Multi-agent orchestration", "MCP", "Prompt & context engineering", "Retrieval & vector search", "vLLM", "Qwen", "Chat-ops agents"],
   Data: ["Python", "PostgreSQL", "Supabase", "Elasticsearch", "OpenSearch", "ClickHouse", "ETL / ELT", "Scraping at scale", "Waterfall verification", "Schema design", "Warehouse modelling"],
   "APIs & Integrations": ["REST / RPC API design", "GraphQL", "OpenAPI", "MCP servers", "FastAPI", "Express", "KrakenD", "Authgear", "Stripe"],
-  "GTM Systems": ["Apollo.io", "ICP design & segmentation", "B2B list building", "Enrichment", "MillionVerifier", "Reacher", "Deliverability", "Smartlead", "Instantly", "HubSpot", "RevOps data modelling"],
+  "GTM Systems": ["Apollo.io", "ICP design & segmentation", "B2B list building", "Enrichment", "MillionVerifier", "Reacher", "Deliverability", "Smartlead", "Instantly", "HubSpot", "CRM & API integrations", "Lead routing", "Web scraping", "RevOps data modelling"],
   "Apps & Languages": ["Python", "TypeScript", "JavaScript", "SQL", "Bash", "Next.js", "React", "Node.js", "Kotlin", "Android", "Swift"],
-  Professional: ["Team leadership", "Directing AI build agents", "Client-facing problem solving", "Technical documentation & standards", "Founding a business", "Async remote work with US teams"],
+  Professional: ["Team leadership", "Directing AI build agents", "Client-facing problem solving", "Technical documentation & standards", "Early-stage product building", "Async remote work with US teams", "Remote contract or full-time, worldwide"],
 };
 
 /** One line of proof shown under each skill track. */
@@ -381,7 +381,7 @@ export const stackProof: Record<string, string> = {
   "APIs & Integrations": "Keyed APIs, generated SDKs and MCP tools",
   "GTM Systems": "ICP in, verified leads out, straight into the sending tool",
   "Apps & Languages": "Next.js dashboards and a native Android app",
-  Professional: "Leads a remote data team across time zones",
+  Professional: "Leads a remote data team; works US Eastern hours from Bangladesh",
 };
 
 /** Brand icon for a skill: a simple-icons slug, or a local logo under public/. */
